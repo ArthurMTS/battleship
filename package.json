@@ -2,5 +2,20 @@
   "name": "battleship",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack",
+    "start-watch": "webpack --watch",
+    "test": "jest",
+    "test-watch": "jest --watch"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@webpack-cli/generators": "^2.2.0",
+    "babel-loader": "^8.2.2",
+    "jest": "^27.0.6",
+    "webpack": "^5.45.1",
+    "webpack-cli": "^4.7.2"
+  }
 }
