@@ -1,23 +1,23 @@
-const ship = require('../src/factories/ship');
+const Ship = require('../src/factories/Ship');
 
 it('Ship positions', () => {
-  expect(ship([0, 1, 2]).positions).toEqual([0, 1, 2]);
+  expect(Ship([0, 1, 2]).positions).toEqual([0, 1, 2]);
 });
 
 it('Ship length', () => {
-  expect(ship([0, 1, 2]).length).toBe(3);
+  expect(Ship([0, 1, 2]).length).toBe(3);
 });
 
 it('Ship length 0', () => {
-  expect(ship().length).toBe(0);
+  expect(Ship().length).toBe(0);
 });
 
 it('Ship 0 hits', () => {
-  expect(ship([0, 1, 2]).hits.length).toBe(0);
+  expect(Ship([0, 1, 2]).hits.length).toBe(0);
 });
 
 it('Hit the ship', () => {
-  const myShip = ship([12, 13, 14]);
+  const myShip = Ship([12, 13, 14]);
   myShip.hit(12);
   myShip.hit(13);
   myShip.hit(14);
@@ -27,7 +27,7 @@ it('Hit the ship', () => {
 });
 
 it('Is ship sunk? (1)', () => {
-  const myShip = ship([12, 13, 14]);
+  const myShip = Ship([12, 13, 14]);
   myShip.hit(12);
   myShip.hit(13);
   myShip.hit(14);
@@ -36,7 +36,7 @@ it('Is ship sunk? (1)', () => {
 });
 
 it('Is ship sunk? (2)', () => {
-  const myShip = ship([12, 13, 14]);
+  const myShip = Ship([12, 13, 14]);
   myShip.hit(12);
 
   expect(myShip.isSunk()).toBeFalsy();

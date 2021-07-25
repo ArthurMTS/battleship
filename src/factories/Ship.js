@@ -1,4 +1,4 @@
-function ship(positions = []) {
+function Ship(positions = []) {
   const length = positions.length;
   const hits = [];
 
@@ -23,4 +23,4 @@ function ship(positions = []) {
   }
 }
 
-module.exports = ship;
+module.exports = Ship;
