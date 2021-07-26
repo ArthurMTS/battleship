@@ -1,25 +1,24 @@
-function Ship(positions = []) {
-  const length = positions.length;
-  const hits = [];
+function Ship(shipSize) {
+  if (shipSize < 1 || shipSize > 5) return null;
+
+  const length = shipSize;
+  const positions = (new Array(length)).fill(false);
 
   function hit(index) {
-    if (!positions.includes(index)) return;
-    if (hits.length >= length) return;
-    if (hits.includes(index)) return;
+    if (index < 0 || index >= length) return;
 
-    hits.push(index);
+    positions[index] = true;
   }
   
   function isSunk() {
-    return hits.length === length && hits.every(hit => positions.includes(hit));
+    return positions.every(position => position);
   }
 
   return {
     positions,
     length,
-    hits,
-    hit,
-    isSunk
+    isSunk,
+    hit
   }
 }
 
