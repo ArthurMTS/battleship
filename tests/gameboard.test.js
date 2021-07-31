@@ -53,7 +53,7 @@ it('Are all ships sunk?', () => {
 it('Miss attack', () => {
   const gb = GameBoard();
 
-  expect(gb.receiveAttack(0, 0)).toEqual({
+  expect(gb.attack(0, 0)).toEqual({
     wasShooted: true,
     ship: null
   });
@@ -65,7 +65,7 @@ it('Hit attack', () => {
   gb.placeShip(0, 0, 1);
   //gb.placeShip(1, 2, 2);
 
-  expect(gb.receiveAttack(0, 0)).toEqual({
+  expect(gb.attack(0, 0)).toEqual({
     wasShooted: true,
     ship: { index: 0, position: 0 }
   });

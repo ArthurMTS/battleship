@@ -28,7 +28,7 @@ function GameBoard() {
     return ships.every(ship => ship.isSunk());
   }
 
-  function receiveAttack(x, y) {
+  function attack(x, y) {
     if (x < 0 || x > 9 || y < 0 || y > 9) return null;
     if (board[x][y].wasShooted) return null;
 
@@ -46,7 +46,7 @@ function GameBoard() {
   return {
     board,
     ships,
-    receiveAttack,
+    attack,
     placeShip,
     allSunk,
   }
