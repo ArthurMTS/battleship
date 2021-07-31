@@ -1,4 +1,6 @@
-function GameBoard(Ship = {}) {
+const Ship = require('./Ship');
+
+function GameBoard() {
 
   const board = (new Array(10)).fill((new Array(10)).fill({
     wasShooted: false,
