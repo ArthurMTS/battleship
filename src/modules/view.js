@@ -7,6 +7,7 @@ const view = (function() {
   title.textContent = '⚓ Battleship ⚓';
 
   const main = document.createElement('main');
+  main.id =  'main';
 
   const footer = document.createElement('footer');
   footer.id = 'main-footer';
@@ -22,14 +23,45 @@ const view = (function() {
     footer
   )
 
-  function renderStartPage() {}
+  function renderStartPage(handler) {
+    main.innerHTML = '';
+
+    const startPage = document.createElement('div');
+    startPage.id = 'start-page';
+
+    const title = document.createElement('h2');
+    title.textContent = 'Battleship Game';
+
+    const form = document.createElement('form');
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+
+      handler();
+    });
+    
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = 'Player name';
+    input.required = true;
+
+    const submit = document.createElement('button');
+    submit.textContent = 'Start Game';
+    submit.type = 'submit';
+
+    form.append(input, submit);
+
+    startPage.append(title, form);
+
+    main.append(startPage);
+  }
 
   function renderGamePage() {}
 
   function gameOver() {}
 
   return {
-
+    renderStartPage
   }
 })();
 
