@@ -23,7 +23,7 @@ const view = (function() {
     footer
   )
 
-  function renderStartPage(handler) {
+  function renderStartPage(newGame) {
     main.innerHTML = '';
 
     const startPage = document.createElement('div');
@@ -37,7 +37,9 @@ const view = (function() {
     form.addEventListener('submit', event => {
       event.preventDefault();
 
-      handler();
+      newGame(input.value);
+
+      renderGamePage();
     });
     
     const input = document.createElement('input');
@@ -56,7 +58,9 @@ const view = (function() {
     main.append(startPage);
   }
 
-  function renderGamePage() {}
+  function renderGamePage() {
+    main.innerHTML = '';
+  }
 
   function gameOver() {}
 
