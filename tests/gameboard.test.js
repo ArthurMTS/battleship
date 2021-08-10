@@ -1,4 +1,5 @@
 const GameBoard = require('../src/factories/GameBoard');
+const Ship = require('../src/factories/Ship');
 
 it('Board created', () => {
   const expecting = GameBoard().board;
@@ -18,8 +19,9 @@ it('No ships', () => {
 
 it('Adding a ship', () => {
   const gb = GameBoard();
+  const ship = Ship(1)
 
-  gb.placeShip(0, 0, 1);
+  gb.placeShip(ship, 0, 0);
 
   expect(gb.ships.length).toBe(1);
   expect(gb.ships[0].length).toBe(1);
@@ -31,8 +33,9 @@ it('Adding a ship', () => {
 
 it('No ships sunk', () => {
   const gb = GameBoard();
+  const ship = Ship(1);
 
-  gb.placeShip(0, 0, 1);
+  gb.placeShip(ship, 0, 0);
 
   expect(gb.allSunk()).toBeFalsy();
 });
@@ -40,8 +43,11 @@ it('No ships sunk', () => {
 it('Are all ships sunk?', () => {
   const gb = GameBoard();
 
-  gb.placeShip(0, 0, 1);
-  gb.placeShip(1, 2, 2);
+  const ship1 = Ship(1)
+  const ship2 = Ship(2)
+
+  gb.placeShip(ship1, 0, 0);
+  gb.placeShip(ship2, 1, 2);
 
   gb.ships[0].hit(0);
   gb.ships[1].hit(0);
@@ -61,9 +67,9 @@ it('Miss attack', () => {
 
 it('Hit attack', () => {
   const gb = GameBoard();
+  const ship = Ship(1)
 
-  gb.placeShip(0, 0, 1);
-  //gb.placeShip(1, 2, 2);
+  gb.placeShip(ship, 0, 0);
 
   expect(gb.attack(0, 0)).toEqual({
     wasShooted: true,

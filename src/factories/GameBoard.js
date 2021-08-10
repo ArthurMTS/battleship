@@ -1,5 +1,3 @@
-const Ship = require('./Ship');
-
 function GameBoard() {
 
   const board = (new Array(10)).fill((new Array(10)).fill({
@@ -9,19 +7,19 @@ function GameBoard() {
 
   const ships = [];
 
-  function placeShip(x, y, shipSize) {
-    // faltando colocar o navio no 'board'
-    // verificação para não colocar navios na mesma posição ou fora do grid
-    const newShip = Ship(shipSize);
+  function placeShip(ship, x, y) {
+    if (x > 9 || x < 0 || y > 9 || y < 0) return;
 
-    newShip.positions.forEach((_, index) => {
-      board[x][y + index].ship = {
-        index: ships.length,
-        position: y + index,
+    ship.positions.forEach((_, index) => {
+      if (board[x][y + index].ship == null) {
+        board[x][y + index].ship = {
+          index: ships.length,
+          position: y + index,
+        }
       }
     });
 
-    ships.push(newShip);
+    ships.push(ship);
   }
 
   function allSunk() {
