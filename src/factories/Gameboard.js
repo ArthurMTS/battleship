@@ -28,6 +28,8 @@ function Gameboard() {
   function receiveAttack(x, y) {
     if (x < 0 || x >= MAX || y < 0 || y >= MAX) return;
 
+    if (grid[x][y].hitted) return false;
+
     grid[x][y].hitted = true;
 
     if (grid[x][y].ship != null) {
@@ -35,7 +37,9 @@ function Gameboard() {
       const { id, position } = grid[x][y].ship;
 
       ships[id].hit(position);
-    } 
+    }
+
+    return true;
   }
 
   function allSunk() {
