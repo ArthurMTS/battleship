@@ -1,0 +1,1 @@
+const View = require('./modules/view');
