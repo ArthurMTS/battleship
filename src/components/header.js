@@ -18,7 +18,7 @@ function header(root) {
 
   const source = document.createElement('li');
   const sourceLink = document.createElement('a');
-  sourceLink.textContent = "Source code";
+  sourceLink.textContent = "Source Code";
   sourceLink.href = 'https://github.com/ArthurMTS/battleship';
   sourceLink.target = "_blank";
   source.append(sourceLink);
