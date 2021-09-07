@@ -1,3 +1,4 @@
+const Game = require('./modules/game');
 const View = require('./modules/view');
 
-View.newGamePage();
+View.newGamePage(Game.newGame);

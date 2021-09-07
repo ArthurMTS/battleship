@@ -66,7 +66,6 @@ a {
 #main {
   height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -84,7 +83,7 @@ a {
 }
 
 #newgame-form #username-ipt {
-  padding: 10px 20px;
+  padding: 10px 15px;
   border: none;
   border-radius: 5px;
   font-size: 20px;
@@ -105,6 +104,38 @@ a {
 #newgame-form #newgame-btn:hover {
   color: #eeeeee;
   transform: scale(1.05);
+}
+
+.gameboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.gameboard .owner {
+  font-size: 26px;
+  color: #eeeeee;
+  margin-top: 10px;
+}
+
+.gameboard .grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  background-color: #eeeeee;
+  margin: 0 20px;
+}
+
+.grid .cell {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #212949;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.grid .cell:hover {
+  transform: scale(1.1);
 }
 
 #main-footer {

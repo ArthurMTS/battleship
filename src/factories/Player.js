@@ -1,3 +1,5 @@
+const getRandomInt = require('../utils/getRandomInt');
+
 function Player(playerName, gb = undefined, bot = false) {
   const name = playerName;
   const gameboard = gb;
@@ -5,7 +7,6 @@ function Player(playerName, gb = undefined, bot = false) {
 
   function attack(x, y) {
     if (isBot) {
-      // random x and y
       x = getRandomInt(10);
       y = getRandomInt(10);
     }
@@ -19,10 +20,6 @@ function Player(playerName, gb = undefined, bot = false) {
     isBot,
     attack
   }
-}
-
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
 }
 
 module.exports = Player;

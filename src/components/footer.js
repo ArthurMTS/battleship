@@ -3,7 +3,7 @@ function footer(root) {
   footer.id = "main-footer";
 
   const p = document.createElement('p');
-  p.textContent = "Created with ❤️ by ArthurMTS";
+  p.textContent = "Made with ❤️ by ArthurMTS";
 
   footer.append(p);
   root.append(footer);
