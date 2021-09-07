@@ -39,6 +39,7 @@ a {
 #main-header #title {
   font-size: 36px;
   color: #e0dedf;
+  text-shadow: 5px 5px #00000040;
 }
 
 #main-header #nav {
@@ -136,6 +137,21 @@ a {
 
 .grid .cell:hover {
   transform: scale(1.1);
+}
+
+.player {
+  cursor: not-allowed !important;
+}
+
+.hitted {
+  cursor: not-allowed !important;
+  background-color: #AF2A40;
+}
+
+.missed {
+  cursor: not-allowed !important;
+  background-color: #5265b4;
+  content: 'X';
 }
 
 #main-footer {

@@ -18,8 +18,8 @@ const Game = (function() {
     computerBoard.placeShip(3, 0, 2);
     computerBoard.placeShip(4, 0, 1);
 
-    const player = Player(playerName, playerBoard);
-    const computer = Player('Computer', computerBoard);
+    const player = Player(playerName, computerBoard);
+    const computer = Player('Computer', playerBoard);
    
     return [player, computer];
   }
