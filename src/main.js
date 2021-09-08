@@ -1,4 +1,5 @@
-const Game = require('./modules/game');
-const View = require('./modules/view');
+const View = require('./modules/View');
 
-View.newGamePage(Game.newGame);
+const view = new View();
+
+view.renderForm();

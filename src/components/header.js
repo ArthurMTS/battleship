@@ -1,4 +1,4 @@
-function header(root) {
+function header() {
   const header = document.createElement('header');
   header.id = 'main-header';
 
@@ -26,7 +26,7 @@ function header(root) {
   list.append(github, source);
   header.append(title, list);
 
-  root.append(header);
+  return header;
 }
 
 module.exports = header;

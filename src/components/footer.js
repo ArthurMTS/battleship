@@ -1,4 +1,4 @@
-function footer(root) {
+function footer() {
   const footer = document.createElement('footer');
   footer.id = "main-footer";
 
@@ -6,7 +6,8 @@ function footer(root) {
   p.textContent = "Made with ❤️ by ArthurMTS";
 
   footer.append(p);
-  root.append(footer);
+  
+  return footer;
 }
 
 module.exports = footer;

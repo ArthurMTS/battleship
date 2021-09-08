@@ -9,7 +9,6 @@
 
 html, body, #root {
   height: 100%;
-  background-color: #212949;
 }
 
 body, button, input {
@@ -69,6 +68,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #212949;
 }
 
 #main h2 {
@@ -107,20 +107,7 @@ a {
   transform: scale(1.05);
 }
 
-.gameboard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.gameboard .owner {
-  font-size: 26px;
-  color: #eeeeee;
-  margin-top: 10px;
-}
-
-.gameboard .grid {
+.grid {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   background-color: #eeeeee;
@@ -140,7 +127,11 @@ a {
 }
 
 .player {
-  cursor: not-allowed !important;
+  cursor: default !important;
+}
+
+.player:hover {
+  transform: scale(1) !important;
 }
 
 .hitted {
@@ -148,10 +139,18 @@ a {
   background-color: #AF2A40;
 }
 
+.hitted:hover {
+  transform: scale(1) !important;
+}
+
 .missed {
   cursor: not-allowed !important;
   background-color: #5265b4;
   content: 'X';
+}
+
+.missed:hover {
+  transform: scale(1) !important;
 }
 
 #main-footer {

@@ -1,17 +1,16 @@
 const header = require('../components/header');
 const footer = require('../components/footer');
-const board = require('../components/board');
 
-const View = (function() {
-  const root = document.querySelector('#root');
-  let player, computer;
+class View {
+  constructor() {
+    this.root = document.querySelector('#root');
+    this.main = document.createElement('main');
+    this.main.id = 'main';
 
-  mainPage(root);
+    this.root.append(header(), this.main, footer());
+  }
 
-  function newGamePage(handler) {
-    const main = document.querySelector('#main');
-    main.innerHTML = '';
-
+  renderForm() {
     const newGame = document.createElement('div');
     newGame.id = 'newgame-page';
 
@@ -23,12 +22,6 @@ const View = (function() {
 
     form.addEventListener('submit', e => {
       e.preventDefault();
-
-      const [p, c] = handler(input.value);
-      player = p;
-      computer = c;
-
-      gamePage();
     });
 
     const input = document.createElement('input');
@@ -44,32 +37,8 @@ const View = (function() {
 
     form.append(input, button);
     newGame.append(subTitle, form);
-    main.append(newGame);
+    this.main.append(newGame);
   }
-
-  function gamePage() {
-    const main = document.querySelector('#main');
-    main.innerHTML = '';
-    main.classList.add('game-page');
-
-    main.append(board(player));
-    main.append(board(computer));
-  }
-
-  return {
-    newGamePage
-  }
-})();
-
-function mainPage(root) {
-  header(root);
-
-  const main = document.createElement('main');
-  main.id = 'main';
-
-  root.append(main);
-
-  footer(root);
 }
 
 module.exports = View;
