@@ -126,11 +126,11 @@ a {
   transform: scale(1.1);
 }
 
-.player {
+.player .cell {
   cursor: default !important;
 }
 
-.player:hover {
+.player .cell:hover {
   transform: scale(1) !important;
 }
 

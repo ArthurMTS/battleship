@@ -1,5 +1,6 @@
 const header = require('../components/header');
 const footer = require('../components/footer');
+const board = require('../components/board');
 
 class View {
   constructor() {
@@ -10,7 +11,7 @@ class View {
     this.root.append(header(), this.main, footer());
   }
 
-  renderForm() {
+  renderForm(handler) {
     const newGame = document.createElement('div');
     newGame.id = 'newgame-page';
 
@@ -22,6 +23,8 @@ class View {
 
     form.addEventListener('submit', e => {
       e.preventDefault();
+
+      handler(input.value);
     });
 
     const input = document.createElement('input');
@@ -37,7 +40,19 @@ class View {
 
     form.append(input, button);
     newGame.append(subTitle, form);
+
     this.main.append(newGame);
+  }
+
+  gamePage(player, computer, handler) {
+    this.main.innerHTML = '';
+
+    this.main.append(board(computer));
+    this.main.append(board(player));
+  }
+
+  loadBoard(player, handler) {
+    
   }
 }
 
