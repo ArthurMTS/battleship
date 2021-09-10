@@ -2,6 +2,8 @@ const header = require('../components/header');
 const footer = require('../components/footer');
 const board = require('../components/board');
 
+const setCellEvent = require('../utils/setCellEvent');
+
 class View {
   constructor() {
     this.root = document.querySelector('#root');
@@ -47,12 +49,26 @@ class View {
   gamePage(player, computer, handler) {
     this.main.innerHTML = '';
 
-    this.main.append(board(computer));
-    this.main.append(board(player));
+    this.main.append(board(computer, handler));
+    this.main.append(board(player, handler));
   }
 
-  loadBoard(player, handler) {
-    
+  loadBoard(player, name, gameboard, handler) {
+    const grid = document.querySelector(`div .${player}`);
+    grid.innerHTML = '';
+
+    for(i = 0; i < 10; i++)
+      for(j = 0; j < 10; j++) {
+        const cell = document.createElement('button');
+        cell.classList.add('cell');
+
+        if (name !== 'Computer' && gameboard.grid[i][j].ship !== null)
+          cell.textContent = '🚢';
+
+        setCellEvent(cell, gameboard, handler, i, j);
+
+        grid.append(cell);
+      }
   }
 }
 

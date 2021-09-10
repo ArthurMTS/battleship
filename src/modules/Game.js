@@ -5,6 +5,7 @@ class Game {
   constructor(view) {
     this.view = view;
     this.players = [];
+    this.gameOver = false;
 
     this.view.renderForm(this.newGame);
   }
@@ -24,13 +25,35 @@ class Game {
     computerBoard.placeShip(3, 0, 2);
     computerBoard.placeShip(4, 0, 1);
 
-    const player = Player(playerName, computerBoard);
+    const player = Player(playerName, computerBoard, true);
     const computer = Player('Computer', playerBoard);
    
     this.players.push(player);
     this.players.push(computer);
 
-    this.view.gamePage(this.players[0], this.players[1]);
+    this.view.gamePage(this.players[0], this.players[1], this.handleBoardAttack);
+  }
+
+  handleBoardAttack = (x, y) => {
+    if (this.gameOver) return;
+
+    this.players[1].attack(x, y);
+    this.players[0].attack();
+  
+    this.view.loadBoard('computer', this.players[1].name, this.players[1].gameboard, this.handleBoardAttack);
+    this.view.loadBoard('player', this.players[0].name, this.players[0].gameboard, this.handleBoardAttack);
+    
+    this.checkWinner();
+  }
+
+  checkWinner() {
+    if (this.players[1].gameboard.allSunk()) {
+      alert(`${this.players[0].name} Wins!`);
+      this.gameOver = true;
+    } else if (this.players[0].gameboard.allSunk()) {
+      alert(`${this.players[1].name} Wins!`);
+      this.gameOver = true;
+    }
   }
 }
 
