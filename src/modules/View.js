@@ -30,15 +30,15 @@ class View {
     });
 
     const input = document.createElement('input');
+    input.placeholder = 'Player name';
     input.id = 'username-ipt';
     input.type = 'text';
-    input.placeholder = 'Player name';
     input.required = true;
 
     const button = document.createElement('button');
-    button.id = 'newgame-btn';
-    button.type = 'submit';
     button.textContent = 'New Game';
+    button.classList.add('pink-button');
+    button.type = 'submit';
 
     form.append(input, button);
     newGame.append(subTitle, form);
@@ -69,6 +69,26 @@ class View {
 
         grid.append(cell);
       }
+  }
+
+  showWinner(winner) {
+    const firstGrid = document.querySelector('.grid');
+
+    const div = document.createElement('div');
+    div.id = 'winner';
+
+    const p = document.createElement('p');
+    p.textContent = `✌️ ${winner} wins! ✌️`;
+
+    const button = document.createElement('button');
+    button.textContent = 'Play again';
+    button.classList.add('pink-button');
+    button.addEventListener('click', () => {
+      location.reload();
+    });
+
+    div.append(p, button);
+    firstGrid.after(div);
   }
 }
 

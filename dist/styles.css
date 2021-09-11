@@ -39,6 +39,12 @@ a {
   font-size: 36px;
   color: #e0dedf;
   text-shadow: 5px 5px #00000040;
+  transition: all .2s;
+}
+
+#title:hover {
+  cursor: pointer;
+  color: #AF2A40 !important;
 }
 
 #main-header #nav {
@@ -64,7 +70,7 @@ a {
 }
 
 #main {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -91,66 +97,20 @@ a {
   margin: 50px 0 20px 0;
 }
 
-#newgame-form #newgame-btn {
-  border: none;
-  border-radius: 5px;
-  font-size: 18px;
-  color: #aaa5ae;
-  background-color: #AF2A40;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: all .2s;
+#winner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-#newgame-form #newgame-btn:hover {
-  color: #eeeeee;
-  transform: scale(1.05);
+#winner p {
+  font-size: 26px;
+  color: #fff;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  background-color: #eeeeee;
-  margin: 0 20px;
-}
-
-.grid .cell {
-  width: 40px;
-  height: 40px;
-  border: 2px solid #212949;
-  cursor: pointer;
-  transition: all .2s;
-}
-
-.grid .cell:hover {
-  transform: scale(1.1);
-}
-
-.player .cell {
-  cursor: default !important;
-}
-
-.player .cell:hover {
-  transform: scale(1) !important;
-}
-
-.hitted {
-  cursor: not-allowed !important;
-  background-color: #AF2A40;
-}
-
-.hitted:hover {
-  transform: scale(1) !important;
-}
-
-.missed {
-  cursor: not-allowed !important;
-  background-color: #5265b4;
-  content: 'X';
-}
-
-.missed:hover {
-  transform: scale(1) !important;
+#winner button {
+  margin-top: 10px;
 }
 
 #main-footer {
@@ -168,4 +128,86 @@ a {
 #main-footer p {
   font-size: 18px;
   color: #eeeeee;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  background-color: #eeeeee;
+  margin: 0 20px;
+}
+
+.grid .cell {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #212949;
+  border-radius: 0;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.player .cell {
+  cursor: default !important;
+  transform: scale(1) !important;
+}
+
+.hitted {
+  cursor: not-allowed !important;
+  background-color: #AF2A40;
+}
+
+.missed {
+  cursor: not-allowed !important;
+  background-color: #5265b4;
+}
+
+.scale:hover {
+  transform: scale(1.1);
+}
+
+.pink-button {
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  color: #eeeeee;
+  background-color: #AF2A40;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.pink-button:hover {
+  transform: scale(1.05);
+}
+
+@media(max-width: 818px) {
+  #main-header {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+  }
+
+  #nav {
+    margin-top: 5px;
+  }
+}
+
+@media(max-width: 1080px) {
+  #main {
+    flex-direction: column;
+    padding-top: 120px;
+  }
+
+  .grid {
+    margin-bottom: 50px;
+  }
+
+  #winner {
+    margin-bottom: 50px;
+  }
+
+  #main-footer {
+    position: inherit;
+  }
 }

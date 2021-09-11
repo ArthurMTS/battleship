@@ -3,8 +3,9 @@ function header() {
   header.id = 'main-header';
 
   const title = document.createElement('h1');
-  title.textContent = "Battleship";
+  title.textContent = 'Battleship';
   title.id = 'title';
+  title.addEventListener('click', () => location.reload());
 
   const list = document.createElement('nav');
   list.id = "nav";

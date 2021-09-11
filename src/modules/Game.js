@@ -48,11 +48,12 @@ class Game {
 
   checkWinner() {
     if (this.players[1].gameboard.allSunk()) {
-      alert(`${this.players[0].name} Wins!`);
       this.gameOver = true;
-    } else if (this.players[0].gameboard.allSunk()) {
-      alert(`${this.players[1].name} Wins!`);
+      setTimeout(() => this.view.showWinner(this.players[0].name), 500);
+    }
+    else if (this.players[0].gameboard.allSunk()) {
       this.gameOver = true;
+      setTimeout(() => this.view.showWinner(this.players[1].name), 500);
     }
   }
 }
