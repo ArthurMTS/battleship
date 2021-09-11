@@ -53,6 +53,10 @@ a {
   align-items: center;
 }
 
+#nav ul {
+  display: flex;
+}
+
 #nav li {
   padding: 0 10px;
   font-size: 18px;
@@ -89,7 +93,7 @@ a {
   align-items: center;
 }
 
-#newgame-form #username-ipt {
+#newgame-form input {
   padding: 10px 15px;
   border: none;
   border-radius: 5px;
@@ -146,7 +150,7 @@ a {
   transition: all .2s;
 }
 
-.player .cell {
+.computer .cell {
   cursor: default !important;
   transform: scale(1) !important;
 }

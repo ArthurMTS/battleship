@@ -1,8 +1,10 @@
+const Gameboard = require('../factories/Gameboard');
+
 const getRandomInt = require('../utils/getRandomInt');
 
-function Player(playerName, gb = undefined, bot = false) {
+function Player(playerName, bot = false) {
   const name = playerName;
-  const gameboard = gb;
+  const gameboard = Gameboard();
   const isBot = bot;
 
   function attack(x, y) {

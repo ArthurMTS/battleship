@@ -1,4 +1,3 @@
-const Gameboard = require('../factories/Gameboard');
 const Player = require('../factories/Player');
 
 class Game {
@@ -11,49 +10,57 @@ class Game {
   }
 
   newGame = (playerName) => {
-    const playerBoard = Gameboard();
-    playerBoard.placeShip(0, 0, 5);
-    playerBoard.placeShip(1, 0, 4);
-    playerBoard.placeShip(2, 0, 3);
-    playerBoard.placeShip(3, 0, 2);
-    playerBoard.placeShip(4, 0, 1);
+    // has computer gameboard
+    const player = Player(playerName);
+    player.gameboard.placeShip(0, 0, 5);
+    player.gameboard.placeShip(1, 0, 4);
+    player.gameboard.placeShip(2, 0, 3);
+    player.gameboard.placeShip(3, 0, 2);
+    player.gameboard.placeShip(4, 0, 1);
 
-    const computerBoard = Gameboard();
-    computerBoard.placeShip(0, 0, 5);
-    computerBoard.placeShip(1, 0, 4);
-    computerBoard.placeShip(2, 0, 3);
-    computerBoard.placeShip(3, 0, 2);
-    computerBoard.placeShip(4, 0, 1);
+    // has player gameboard
+    const computer = Player('Computer', true);
+    computer.gameboard.placeShip(0, 0, 5);
+    computer.gameboard.placeShip(1, 0, 4);
+    computer.gameboard.placeShip(2, 0, 3);
+    computer.gameboard.placeShip(3, 0, 2);
+    computer.gameboard.placeShip(4, 0, 1);
 
-    const player = Player(playerName, computerBoard, true);
-    const computer = Player('Computer', playerBoard);
-   
     this.players.push(player);
     this.players.push(computer);
 
-    this.view.gamePage(this.players[0], this.players[1], this.handleBoardAttack);
+    this.view.gamePage(this.players[1], this.players[0], this.handleBoardAttack);
   }
 
   handleBoardAttack = (x, y) => {
     if (this.gameOver) return;
 
-    this.players[1].attack(x, y);
-    this.players[0].attack();
+    this.players[0].attack(x, y);
+    this.players[1].attack();
   
-    this.view.loadBoard('computer', this.players[1].name, this.players[1].gameboard, this.handleBoardAttack);
-    this.view.loadBoard('player', this.players[0].name, this.players[0].gameboard, this.handleBoardAttack);
+    this.view.loadBoard(
+      'computer',
+      this.players[1].gameboard,
+      this.handleBoardAttack
+    );
+    
+    this.view.loadBoard(
+      'player',
+      this.players[0].gameboard,
+      this.handleBoardAttack
+    );
     
     this.checkWinner();
   }
 
   checkWinner() {
-    if (this.players[1].gameboard.allSunk()) {
+    if (this.players[0].gameboard.allSunk()) {
       this.gameOver = true;
-      setTimeout(() => this.view.showWinner(this.players[0].name), 500);
+      this.view.showWinner(this.players[0].name);
     }
-    else if (this.players[0].gameboard.allSunk()) {
+    else if (this.players[1].gameboard.allSunk()) {
       this.gameOver = true;
-      setTimeout(() => this.view.showWinner(this.players[1].name), 500);
+      this.view.showWinner(this.players[1].name);
     }
   }
 }

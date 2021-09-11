@@ -15,26 +15,28 @@ function Gameboard() {
 
     const ship = Ship(shipSize);
     ships.push(ship);
+
     const shipId = ships.length - 1;
 
-    ship.hits.forEach((_, index) => {
+    ship.hits.forEach((_, index) =>
       grid[x][y + index].ship = {
         id: shipId,
         position: index
       }
-    });
+    );
   }
 
   function receiveAttack(x, y) {
     if (x < 0 || x >= MAX || y < 0 || y >= MAX) return;
 
-    if (grid[x][y].hitted) return false;
+    const { hitted, ship } = grid[x][y];
+
+    if (hitted) return false;
 
     grid[x][y].hitted = true;
 
-    if (grid[x][y].ship != null) {
-      // hit the road- i mean, the ship jack
-      const { id, position } = grid[x][y].ship;
+    if (ship != null) {
+      const { id, position } = ship;
 
       ships[id].hit(position);
     }
@@ -61,12 +63,11 @@ function createGrid(gridSize) {
 
   for(i = 0; i < gridSize; i++) {
     aux = [];
-    for (j = 0; j < gridSize; j++) {
+    for (j = 0; j < gridSize; j++)
       aux.push({
         hitted: false,
         ship: null
       });
-    }
     grid.push(aux);
   }
 

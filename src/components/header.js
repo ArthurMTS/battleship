@@ -7,25 +7,28 @@ function header() {
   title.id = 'title';
   title.addEventListener('click', () => location.reload());
 
-  const list = document.createElement('nav');
-  list.id = "nav";
+  const nav = document.createElement('nav');
+  nav.id = 'nav';
+
+  const list = document.createElement('ul');
 
   const github = document.createElement('li');
   const githubLink = document.createElement('a');
-  githubLink.textContent = "My Github";
+  githubLink.textContent = 'My Github';
   githubLink.href = 'https://github.com/ArthurMTS';
-  githubLink.target = "_blank";
+  githubLink.target = '_blank';
   github.append(githubLink);
 
   const source = document.createElement('li');
   const sourceLink = document.createElement('a');
-  sourceLink.textContent = "Source Code";
+  sourceLink.textContent = 'Source Code';
   sourceLink.href = 'https://github.com/ArthurMTS/battleship';
-  sourceLink.target = "_blank";
+  sourceLink.target = '_blank';
   source.append(sourceLink);
 
   list.append(github, source);
-  header.append(title, list);
+  nav.append(list);
+  header.append(title, nav);
 
   return header;
 }

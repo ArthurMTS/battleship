@@ -1,13 +1,11 @@
 const Player = require('./../src/factories/Player');
-const Gameboard = require('./../src/factories/Gameboard');
 
 it('Creating a Player', () => {
   expect(Player('Arthur').name).toBe('Arthur');
 });
 
-it('Giving the Player a Gameboard', () => {
-  const gb = Gameboard();
-  const player = Player('Arthur', gb);
+it('Checking the Player Gameboard', () => {
+  const player = Player('Arthur');
 
   let i, j, aux;
   const dummyGrid = [];
@@ -27,16 +25,13 @@ it('Giving the Player a Gameboard', () => {
 });
 
 it('Creating a bot player', () => {
-  const gb = Gameboard();
-
-  const player = Player('Silva', gb, true);
+  const player = Player('Silva', true);
 
   expect(player.isBot).toBeTruthy();
 });
 
 it('Player attack', () => {
-  const gb = Gameboard();
-  const player = Player('Matheus', gb);
+  const player = Player('Matheus');
 
   player.attack(0, 0);
 
@@ -44,8 +39,7 @@ it('Player attack', () => {
 });
 
 it('Bot attack', () => {
-  const gb = Gameboard();
-  const player = Player('Computer', gb, true);
+  const player = Player('Computer', true);
 
   const wasHitted = player.attack();
 
