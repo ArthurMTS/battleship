@@ -47,6 +47,26 @@ it('Placing two size four Ships', () => {
   expect(gb.grid[4][8].ship).toEqual({ id: 1, position: 3 });
 });
 
+it('Placing a size four Ship vertically', () => {
+  const gb = Gameboard();
+
+  gb.placeShip(0, 0, 4, true);
+
+  expect(gb.grid[0][0].ship).toEqual({ id: 0, position: 0 });
+  expect(gb.grid[1][0].ship).toEqual({ id: 0, position: 1 });
+  expect(gb.grid[2][0].ship).toEqual({ id: 0, position: 2 });
+  expect(gb.grid[3][0].ship).toEqual({ id: 0, position: 3 });
+});
+
+it('Placing two Ships on the same positions', () => {
+  const gb = Gameboard();
+
+  gb.placeShip(0, 0, 2);
+  gb.placeShip(0, 0, 3);
+
+  expect(gb.grid[0][2].ship).toBe(null);
+});
+
 it('Attacking the grid', () => {
   const gb = Gameboard();
 

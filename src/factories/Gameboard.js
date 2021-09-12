@@ -1,33 +1,39 @@
 const Ship = require('./Ship');
 
-const MAX = 10;
-
 function Gameboard() {
-  const grid = createGrid(MAX);
+  const grid = createGrid(10);
   const ships = [];
 
-  function placeShip(x, y, shipSize) {
-    // need some refactoring
-    // - don't allow ships on the same positions
-    // - allow to place ships vertically
-    if (x < 0 || x >= MAX || y < 0 || y >= MAX) return;
+  function placeShip(x, y, shipSize, vertical = false) {
+    if (x < 0 || x >= 10 || y < 0 || y >= 10) return;
     if (x + shipSize >= 10 && y + shipSize >= 10) return;
+    if (!vertical && y + shipSize >= 10) return;
+    if (vertical && x + shipSize >= 10) return;
+    if (grid[x][y].ship != null) return;
 
     const ship = Ship(shipSize);
     ships.push(ship);
 
     const shipId = ships.length - 1;
 
-    ship.hits.forEach((_, index) =>
-      grid[x][y + index].ship = {
-        id: shipId,
-        position: index
-      }
-    );
+    if (!vertical)
+      ship.hits.forEach((_, index) =>
+        grid[x][y + index].ship = {
+          id: shipId,
+          position: index
+        }
+      );
+    else 
+      ship.hits.forEach((_, index) =>
+        grid[x + index][y].ship = {
+          id: shipId,
+          position: index
+        }
+      );
   }
 
   function receiveAttack(x, y) {
-    if (x < 0 || x >= MAX || y < 0 || y >= MAX) return;
+    if (x < 0 || x >= 10 || y < 0 || y >= 10) return;
 
     const { hitted, ship } = grid[x][y];
 
