@@ -86,7 +86,7 @@ class View {
         else 
           cell.classList.add('scale');
 
-        if (player !== 'computer')
+        if (!hitted && player !== 'computer')
           this.setCellEvent(cell, handler, i, j);
       
         grid.append(cell);

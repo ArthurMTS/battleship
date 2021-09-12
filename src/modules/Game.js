@@ -36,20 +36,21 @@ class Game {
     if (this.gameOver) return;
 
     this.players[0].attack(x, y);
-    this.players[1].attack();
-  
-    this.view.loadBoard(
-      'computer',
-      this.players[1].gameboard,
-      this.handleBoardAttack
-    );
-    
     this.view.loadBoard(
       'player',
       this.players[0].gameboard,
       this.handleBoardAttack
     );
-    
+    this.checkWinner();
+
+    if (this.gameOver) return;
+
+    this.players[1].attack();
+    this.view.loadBoard(
+      'computer',
+      this.players[1].gameboard,
+      this.handleBoardAttack
+    );
     this.checkWinner();
   }
 

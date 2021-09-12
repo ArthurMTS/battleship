@@ -9,8 +9,10 @@ function Player(playerName, bot = false) {
 
   function attack(x, y) {
     if (isBot) {
-      x = getRandomInt(10);
-      y = getRandomInt(10);
+      do {
+        x = getRandomInt(10);
+        y = getRandomInt(10);
+      } while (gameboard.grid[x][y].hitted);
     }
 
     return gameboard.receiveAttack(x, y);
