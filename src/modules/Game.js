@@ -10,21 +10,19 @@ class Game {
   }
 
   newGame = (playerName) => {
+    let i;
+
     // has computer gameboard
     const player = Player(playerName);
-    player.gameboard.placeShip(0, 0, 5);
-    player.gameboard.placeShip(1, 0, 4);
-    player.gameboard.placeShip(2, 0, 3);
-    player.gameboard.placeShip(3, 0, 2);
-    player.gameboard.placeShip(4, 0, 1);
+    for (i = 5; i >= 1; i--) {
+      player.gameboard.placeRandomShip(i);
+    }
 
     // has player gameboard
     const computer = Player('Computer', true);
-    computer.gameboard.placeShip(0, 0, 5);
-    computer.gameboard.placeShip(1, 0, 4);
-    computer.gameboard.placeShip(2, 0, 3);
-    computer.gameboard.placeShip(3, 0, 2);
-    computer.gameboard.placeShip(4, 0, 1);
+    for (i = 5; i >= 1; i--) {
+      computer.gameboard.placeRandomShip(i);
+    }
 
     this.players.push(player);
     this.players.push(computer);

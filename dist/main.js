@@ -1,1 +1,146 @@
-(()=>{var e,t={997:e=>{e.exports=function(){var e=document.createElement("footer");e.id="main-footer";var t=document.createElement("p");return t.textContent="Made with ❤️ by ArthurMTS",e.append(t),e}},835:e=>{e.exports=function(){var e=document.createElement("header");e.id="main-header";var t=document.createElement("h1");t.textContent="Battleship",t.id="title",t.addEventListener("click",(function(){return location.reload()}));var n=document.createElement("nav");n.id="nav";var a=document.createElement("ul"),r=document.createElement("li"),i=document.createElement("a");i.textContent="My Github",i.href="https://github.com/ArthurMTS",i.target="_blank",r.append(i);var o=document.createElement("li"),c=document.createElement("a");return c.textContent="Source Code",c.href="https://github.com/ArthurMTS/battleship",c.target="_blank",o.append(c),a.append(r,o),n.append(a),e.append(t,n),e}},809:(e,t,n)=>{var a=n(613);e.exports=function(){var e=function(e){var t,n,a,r=[];for(t=0;t<10;t++){for(a=[],n=0;n<10;n++)a.push({hitted:!1,ship:null});r.push(a)}return r}(),t=[];return{grid:e,ships:t,placeShip:function(n,r,i){var o=arguments.length>3&&void 0!==arguments[3]&&arguments[3];if(!(n<0||n>=10||r<0||r>=10)&&!(n+i>=10&&r+i>=10)&&(o||!(r+i>=10))&&!(o&&n+i>=10)&&null==e[n][r].ship){var c=a(i);t.push(c);var u=t.length-1;o?c.hits.forEach((function(t,a){return e[n+a][r].ship={id:u,position:a}})):c.hits.forEach((function(t,a){return e[n][r+a].ship={id:u,position:a}}))}},receiveAttack:function(n,a){if(!(n<0||n>=10||a<0||a>=10)){var r=e[n][a],i=r.hitted,o=r.ship;if(i)return!1;if(e[n][a].hitted=!0,null!=o){var c=o.id,u=o.position;t[c].hit(u)}return!0}},allSunk:function(){return t.every((function(e){return e.isSunk()}))}}}},886:(e,t,n)=>{var a=n(809),r=n(694);e.exports=function(e){var t=arguments.length>1&&void 0!==arguments[1]&&arguments[1],n=e,i=a(),o=t;function c(e,t){if(o)do{e=r(10),t=r(10)}while(i.grid[e][t].hitted);return i.receiveAttack(e,t)}return{name:n,gameboard:i,isBot:o,attack:c}}},613:e=>{e.exports=function(e){var t=e,n=function(e){var t,n=[];for(t=0;t<e;t++)n.push(!1);return n}(e);return{length:t,hits:n,hit:function(e){e<0||e>=t||(n[e]=!0)},isSunk:function(){return n.every((function(e){return!0===e}))}}}},257:(e,t,n)=>{function a(e,t){for(var n=0;n<t.length;n++){var a=t[n];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}function r(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}var i=n(886),o=function(){function e(t){var n=this;!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),r(this,"newGame",(function(e){var t=i(e);t.gameboard.placeShip(0,0,5),t.gameboard.placeShip(1,0,4),t.gameboard.placeShip(2,0,3),t.gameboard.placeShip(3,0,2),t.gameboard.placeShip(4,0,1);var a=i("Computer",!0);a.gameboard.placeShip(0,0,5),a.gameboard.placeShip(1,0,4),a.gameboard.placeShip(2,0,3),a.gameboard.placeShip(3,0,2),a.gameboard.placeShip(4,0,1),n.players.push(t),n.players.push(a),n.view.gamePage(n.players[1],n.players[0],n.handleBoardAttack)})),r(this,"handleBoardAttack",(function(e,t){n.gameOver||(n.players[0].attack(e,t),n.view.loadBoard("player",n.players[0].gameboard,n.handleBoardAttack),n.checkWinner(),n.gameOver||(n.players[1].attack(),n.view.loadBoard("computer",n.players[1].gameboard,n.handleBoardAttack),n.checkWinner()))})),this.view=t,this.players=[],this.gameOver=!1,this.view.renderForm(this.newGame)}var t,n;return t=e,(n=[{key:"checkWinner",value:function(){this.players[0].gameboard.allSunk()?(this.gameOver=!0,this.view.showWinner(this.players[0].name)):this.players[1].gameboard.allSunk()&&(this.gameOver=!0,this.view.showWinner(this.players[1].name))}}])&&a(t.prototype,n),e}();e.exports=o},19:(e,t,n)=>{function a(e,t){for(var n=0;n<t.length;n++){var a=t[n];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}var r=n(835),i=n(997),o=function(){function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.main=document.createElement("main"),this.main.id="main",document.querySelector("#root").append(r(),this.main,i())}var t,n;return t=e,(n=[{key:"renderForm",value:function(e){var t=document.createElement("div");t.id="newgame-page";var n=document.createElement("h2");n.textContent="Enter your name";var a=document.createElement("form");a.id="newgame-form",a.addEventListener("submit",(function(t){t.preventDefault(),e(r.value)}));var r=document.createElement("input");r.placeholder="Player name",r.type="text",r.required=!0;var i=document.createElement("button");i.textContent="New Game",i.classList.add("pink-button"),i.type="submit",a.append(r,i),t.append(n,a),this.main.append(t)}},{key:"gamePage",value:function(e,t,n){this.main.innerHTML="";var a=document.createElement("div");a.classList.add("grid"),a.classList.add("player");var r=document.createElement("div");r.classList.add("grid"),r.classList.add("computer"),this.main.append(r,a),this.loadBoard("player",e.gameboard,n),this.loadBoard("computer",t.gameboard,n)}},{key:"loadBoard",value:function(e,t,n){var a,r,i=document.querySelector("div .".concat(e));for(i.innerHTML="",a=0;a<10;a++)for(r=0;r<10;r++){var o=document.createElement("button");o.title="cell",o.classList.add("cell");var c=t.grid[a][r],u=c.hitted,l=c.ship;"computer"===e&&null!==l&&(o.textContent="🚢"),u&&null!==l?(o.classList.add("hitted"),o.textContent="🚢"):u&&null===l?o.classList.add("missed"):o.classList.add("scale"),u||"computer"===e||this.setCellEvent(o,n,a,r),i.append(o)}}},{key:"setCellEvent",value:function(e,t,n,a){e.addEventListener("click",(function(){return t(n,a)}))}},{key:"showWinner",value:function(e){var t=document.querySelector(".grid"),n=document.createElement("div");n.id="winner";var a=document.createElement("p");a.textContent="✌️ ".concat(e," WINS! ✌️");var r=document.createElement("button");r.textContent="Play again",r.classList.add("pink-button"),r.addEventListener("click",(function(){return location.reload()})),n.append(a,r),t.after(n)}}])&&a(t.prototype,n),e}();e.exports=o},694:e=>{e.exports=function(e){return Math.floor(Math.random()*e)}}},n={};function a(e){var r=n[e];if(void 0!==r)return r.exports;var i=n[e]={exports:{}};return t[e](i,i.exports,a),i.exports}e=a(19),new(a(257))(new e)})();
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./src/components/footer.js":
+/*!**********************************!*\
+  !*** ./src/components/footer.js ***!
+  \**********************************/
+/***/ ((module) => {
+
+eval("function footer() {\n  var footer = document.createElement('footer');\n  footer.id = 'main-footer';\n  var p = document.createElement('p');\n  p.textContent = 'Made with ❤️ by ArthurMTS';\n  footer.append(p);\n  return footer;\n}\n\nmodule.exports = footer;\n\n//# sourceURL=webpack://battleship/./src/components/footer.js?");
+
+/***/ }),
+
+/***/ "./src/components/header.js":
+/*!**********************************!*\
+  !*** ./src/components/header.js ***!
+  \**********************************/
+/***/ ((module) => {
+
+eval("function header() {\n  var header = document.createElement('header');\n  header.id = 'main-header';\n  var title = document.createElement('h1');\n  title.textContent = 'Battleship';\n  title.id = 'title';\n  title.addEventListener('click', function () {\n    return location.reload();\n  });\n  var nav = document.createElement('nav');\n  nav.id = 'nav';\n  var list = document.createElement('ul');\n  var github = document.createElement('li');\n  var githubLink = document.createElement('a');\n  githubLink.textContent = 'My Github';\n  githubLink.href = 'https://github.com/ArthurMTS';\n  githubLink.target = '_blank';\n  github.append(githubLink);\n  var source = document.createElement('li');\n  var sourceLink = document.createElement('a');\n  sourceLink.textContent = 'Source Code';\n  sourceLink.href = 'https://github.com/ArthurMTS/battleship';\n  sourceLink.target = '_blank';\n  source.append(sourceLink);\n  list.append(github, source);\n  nav.append(list);\n  header.append(title, nav);\n  return header;\n}\n\nmodule.exports = header;\n\n//# sourceURL=webpack://battleship/./src/components/header.js?");
+
+/***/ }),
+
+/***/ "./src/factories/Gameboard.js":
+/*!************************************!*\
+  !*** ./src/factories/Gameboard.js ***!
+  \************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("var Ship = __webpack_require__(/*! ./Ship */ \"./src/factories/Ship.js\");\n\nvar getRandomInt = __webpack_require__(/*! ../utils/getRandomInt */ \"./src/utils/getRandomInt.js\");\n\nvar checkPositions = __webpack_require__(/*! ../utils/checkPositions */ \"./src/utils/checkPositions.js\");\n\nfunction Gameboard() {\n  var grid = createGrid(10);\n  var ships = [];\n\n  function placeShip(x, y, shipSize) {\n    var vertical = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;\n    if (x < 0 || x >= 10 || y < 0 || y >= 10) return;\n    if (x + shipSize >= 10 && y + shipSize >= 10) return;\n    if (!vertical && y + shipSize >= 10) return;\n    if (vertical && x + shipSize >= 10) return;\n    if (grid[x][y].ship != null) return;\n    var ship = Ship(shipSize);\n    ships.push(ship);\n    var shipId = ships.length - 1;\n    if (!vertical) ship.hits.forEach(function (_, index) {\n      return grid[x][y + index].ship = {\n        id: shipId,\n        position: index\n      };\n    });else ship.hits.forEach(function (_, index) {\n      return grid[x + index][y].ship = {\n        id: shipId,\n        position: index\n      };\n    });\n  }\n\n  function placeRandomShip(shipSize) {\n    var x, y, vertical;\n\n    do {\n      x = getRandomInt(10);\n      y = getRandomInt(10);\n    } while (checkPositions(grid, x, y) || x + shipSize >= 10 && y + shipSize >= 10 || checkPositions(grid, x + shipSize - 1, y) || checkPositions(grid, x, y + shipSize - 1));\n\n    if (x + shipSize >= 10) vertical = false;else if (y + shipSize >= 10) vertical = true;else vertical = getRandomInt(2) ? true : false;\n    placeShip(x, y, shipSize, vertical);\n  }\n\n  function receiveAttack(x, y) {\n    if (x < 0 || x >= 10 || y < 0 || y >= 10) return;\n    var _grid$x$y = grid[x][y],\n        hitted = _grid$x$y.hitted,\n        ship = _grid$x$y.ship;\n    if (hitted) return false;\n    grid[x][y].hitted = true;\n\n    if (ship != null) {\n      var id = ship.id,\n          position = ship.position;\n      ships[id].hit(position);\n    }\n\n    return true;\n  }\n\n  function allSunk() {\n    return ships.every(function (ship) {\n      return ship.isSunk();\n    });\n  }\n\n  return {\n    grid: grid,\n    ships: ships,\n    placeShip: placeShip,\n    placeRandomShip: placeRandomShip,\n    receiveAttack: receiveAttack,\n    allSunk: allSunk\n  };\n}\n\nfunction createGrid(gridSize) {\n  var i, j, aux;\n  var grid = [];\n\n  for (i = 0; i < gridSize; i++) {\n    aux = [];\n\n    for (j = 0; j < gridSize; j++) {\n      aux.push({\n        hitted: false,\n        ship: null\n      });\n    }\n\n    grid.push(aux);\n  }\n\n  return grid;\n}\n\nmodule.exports = Gameboard;\n\n//# sourceURL=webpack://battleship/./src/factories/Gameboard.js?");
+
+/***/ }),
+
+/***/ "./src/factories/Player.js":
+/*!*********************************!*\
+  !*** ./src/factories/Player.js ***!
+  \*********************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("var Gameboard = __webpack_require__(/*! ../factories/Gameboard */ \"./src/factories/Gameboard.js\");\n\nvar getRandomInt = __webpack_require__(/*! ../utils/getRandomInt */ \"./src/utils/getRandomInt.js\");\n\nfunction Player(playerName) {\n  var bot = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;\n  var name = playerName;\n  var gameboard = Gameboard();\n  var isBot = bot;\n\n  function attack(x, y) {\n    if (isBot) {\n      do {\n        x = getRandomInt(10);\n        y = getRandomInt(10);\n      } while (gameboard.grid[x][y].hitted);\n    }\n\n    return gameboard.receiveAttack(x, y);\n  }\n\n  return {\n    name: name,\n    gameboard: gameboard,\n    isBot: isBot,\n    attack: attack\n  };\n}\n\nmodule.exports = Player;\n\n//# sourceURL=webpack://battleship/./src/factories/Player.js?");
+
+/***/ }),
+
+/***/ "./src/factories/Ship.js":
+/*!*******************************!*\
+  !*** ./src/factories/Ship.js ***!
+  \*******************************/
+/***/ ((module) => {
+
+eval("function Ship(shipSize) {\n  var length = shipSize;\n  var hits = initializeHits(shipSize);\n\n  function hit(position) {\n    if (position < 0 || position >= length) return;\n    hits[position] = true;\n  }\n\n  function isSunk() {\n    return hits.every(function (position) {\n      return position === true;\n    });\n  }\n\n  return {\n    length: length,\n    hits: hits,\n    hit: hit,\n    isSunk: isSunk\n  };\n}\n\nfunction initializeHits(shipSize) {\n  var i;\n  var hits = [];\n\n  for (i = 0; i < shipSize; i++) {\n    hits.push(false);\n  }\n\n  return hits;\n}\n\nmodule.exports = Ship;\n\n//# sourceURL=webpack://battleship/./src/factories/Ship.js?");
+
+/***/ }),
+
+/***/ "./src/main.js":
+/*!*********************!*\
+  !*** ./src/main.js ***!
+  \*********************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("var View = __webpack_require__(/*! ./modules/View */ \"./src/modules/View.js\");\n\nvar Game = __webpack_require__(/*! ./modules/Game */ \"./src/modules/Game.js\");\n\nnew Game(new View());\n\n//# sourceURL=webpack://battleship/./src/main.js?");
+
+/***/ }),
+
+/***/ "./src/modules/Game.js":
+/*!*****************************!*\
+  !*** ./src/modules/Game.js ***!
+  \*****************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }\n\nfunction _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }\n\nfunction _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }\n\nvar Player = __webpack_require__(/*! ../factories/Player */ \"./src/factories/Player.js\");\n\nvar Game = /*#__PURE__*/function () {\n  function Game(view) {\n    var _this = this;\n\n    _classCallCheck(this, Game);\n\n    _defineProperty(this, \"newGame\", function (playerName) {\n      var i; // has computer gameboard\n\n      var player = Player(playerName);\n\n      for (i = 5; i >= 1; i--) {\n        player.gameboard.placeRandomShip(i);\n      } // has player gameboard\n\n\n      var computer = Player('Computer', true);\n\n      for (i = 5; i >= 1; i--) {\n        computer.gameboard.placeRandomShip(i);\n      }\n\n      _this.players.push(player);\n\n      _this.players.push(computer);\n\n      _this.view.gamePage(_this.players[0], _this.players[1], _this.handleBoardAttack);\n    });\n\n    _defineProperty(this, \"handleBoardAttack\", function (x, y) {\n      if (_this.gameOver) return;\n\n      _this.players[0].attack(x, y);\n\n      _this.view.loadBoard('player', _this.players[0].gameboard, _this.handleBoardAttack);\n\n      _this.checkWinner();\n\n      if (_this.gameOver) return;\n\n      _this.players[1].attack();\n\n      _this.view.loadBoard('computer', _this.players[1].gameboard, _this.handleBoardAttack);\n\n      _this.checkWinner();\n    });\n\n    this.view = view;\n    this.players = [];\n    this.gameOver = false;\n    this.view.renderForm(this.newGame);\n  }\n\n  _createClass(Game, [{\n    key: \"checkWinner\",\n    value: function checkWinner() {\n      if (this.players[0].gameboard.allSunk()) {\n        this.gameOver = true;\n        this.view.showWinner(this.players[0].name);\n      } else if (this.players[1].gameboard.allSunk()) {\n        this.gameOver = true;\n        this.view.showWinner(this.players[1].name);\n      }\n    }\n  }]);\n\n  return Game;\n}();\n\nmodule.exports = Game;\n\n//# sourceURL=webpack://battleship/./src/modules/Game.js?");
+
+/***/ }),
+
+/***/ "./src/modules/View.js":
+/*!*****************************!*\
+  !*** ./src/modules/View.js ***!
+  \*****************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }\n\nfunction _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }\n\nvar header = __webpack_require__(/*! ../components/header */ \"./src/components/header.js\");\n\nvar footer = __webpack_require__(/*! ../components/footer */ \"./src/components/footer.js\");\n\nvar View = /*#__PURE__*/function () {\n  function View() {\n    _classCallCheck(this, View);\n\n    this.main = document.createElement('main');\n    this.main.id = 'main';\n    this.playerGrid;\n    this.computerGrid;\n    document.querySelector('#root').append(header(), this.main, footer());\n  }\n\n  _createClass(View, [{\n    key: \"renderForm\",\n    value: function renderForm(handler) {\n      var newGame = document.createElement('div');\n      newGame.id = 'newgame-page';\n      var subTitle = document.createElement('h2');\n      subTitle.textContent = 'Enter your name';\n      var form = document.createElement('form');\n      form.id = 'newgame-form';\n      form.addEventListener('submit', function (e) {\n        e.preventDefault();\n        handler(input.value);\n      });\n      var input = document.createElement('input');\n      input.placeholder = 'Player name';\n      input.type = 'text';\n      input.required = true;\n      var button = document.createElement('button');\n      button.textContent = 'New Game';\n      button.classList.add('pink-button');\n      button.type = 'submit';\n      form.append(input, button);\n      newGame.append(subTitle, form);\n      this.main.append(newGame);\n    }\n  }, {\n    key: \"gamePage\",\n    value: function gamePage(player, computer, handler) {\n      this.main.innerHTML = '';\n      var gridPlayer = document.createElement('div');\n      gridPlayer.classList.add('grid');\n      gridPlayer.classList.add('player');\n      var gridComputer = document.createElement('div');\n      gridComputer.classList.add('grid');\n      gridComputer.classList.add('computer');\n      this.playerGrid = gridPlayer;\n      this.computerGrid = gridComputer;\n      this.main.append(gridComputer, gridPlayer);\n      this.loadBoard('player', player.gameboard, handler);\n      this.loadBoard('computer', computer.gameboard, handler);\n    }\n  }, {\n    key: \"loadBoard\",\n    value: function loadBoard(player, gameboard, handler) {\n      var grid = player === 'player' ? this.playerGrid : this.computerGrid;\n      grid.innerHTML = '';\n      var i, j;\n\n      for (i = 0; i < 10; i++) {\n        for (j = 0; j < 10; j++) {\n          var cell = document.createElement('button');\n          cell.title = 'cell';\n          cell.classList.add('cell');\n          var _gameboard$grid$i$j = gameboard.grid[i][j],\n              hitted = _gameboard$grid$i$j.hitted,\n              ship = _gameboard$grid$i$j.ship;\n          if (player === 'computer' && ship !== null) cell.textContent = '🚢';\n\n          if (hitted && ship !== null) {\n            cell.classList.add('hitted');\n            cell.textContent = '🚢';\n          } else if (hitted && ship === null) cell.classList.add('missed');else cell.classList.add('scale');\n\n          if (!hitted && player !== 'computer') this.setCellEvent(cell, handler, i, j);\n          grid.append(cell);\n        }\n      }\n    }\n  }, {\n    key: \"setCellEvent\",\n    value: function setCellEvent(cell, handler, i, j) {\n      cell.addEventListener('click', function () {\n        return handler(i, j);\n      });\n    }\n  }, {\n    key: \"showWinner\",\n    value: function showWinner(winner) {\n      var firstGrid = document.querySelector('.grid');\n      var div = document.createElement('div');\n      div.id = 'winner';\n      var p = document.createElement('p');\n      p.textContent = \"\\u270C\\uFE0F \".concat(winner, \" WINS! \\u270C\\uFE0F\");\n      var button = document.createElement('button');\n      button.textContent = 'Play again';\n      button.classList.add('pink-button');\n      button.addEventListener('click', function () {\n        return location.reload();\n      });\n      div.append(p, button);\n      firstGrid.after(div);\n    }\n  }]);\n\n  return View;\n}();\n\nmodule.exports = View;\n\n//# sourceURL=webpack://battleship/./src/modules/View.js?");
+
+/***/ }),
+
+/***/ "./src/utils/checkPositions.js":
+/*!*************************************!*\
+  !*** ./src/utils/checkPositions.js ***!
+  \*************************************/
+/***/ ((module) => {
+
+eval("function checkPositions(grid, x, y) {\n  return checkPosition(grid, x, y) || checkPosition(grid, x - 1, y - 1) || checkPosition(grid, x + 1, y + 1) || checkPosition(grid, x + 1, y - 1) || checkPosition(grid, x - 1, y + 1) || checkPosition(grid, x - 1, y) || checkPosition(grid, x, y - 1) || checkPosition(grid, x + 1, y) || checkPosition(grid, x, y + 1);\n}\n\nfunction checkPosition(grid, x, y) {\n  if (x < 0 || y >= 10 || y < 0 || y >= 10) return false;\n\n  try {\n    if (grid[x][y].ship != null) return true;\n  } catch (e) {\n    return true;\n  }\n\n  return false;\n}\n\nmodule.exports = checkPositions;\n\n//# sourceURL=webpack://battleship/./src/utils/checkPositions.js?");
+
+/***/ }),
+
+/***/ "./src/utils/getRandomInt.js":
+/*!***********************************!*\
+  !*** ./src/utils/getRandomInt.js ***!
+  \***********************************/
+/***/ ((module) => {
+
+eval("function getRandomInt(range) {\n  return Math.floor(Math.random() * range);\n}\n\nmodule.exports = getRandomInt;\n\n//# sourceURL=webpack://battleship/./src/utils/getRandomInt.js?");
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/main.js");
+/******/ 	
+/******/ })()
+;

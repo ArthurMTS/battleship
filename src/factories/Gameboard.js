@@ -1,5 +1,8 @@
 const Ship = require('./Ship');
 
+const getRandomInt = require('../utils/getRandomInt');
+const checkPositions = require('../utils/checkPositions');
+
 function Gameboard() {
   const grid = createGrid(10);
   const ships = [];
@@ -32,6 +35,25 @@ function Gameboard() {
       );
   }
 
+  function placeRandomShip(shipSize) {
+    let x, y, vertical;
+
+    do {
+      x = getRandomInt(10);
+      y = getRandomInt(10);
+
+    } while (
+      checkPositions(grid, x, y) || (x + shipSize >= 10 && y + shipSize >= 10) ||
+      (checkPositions(grid, x + shipSize - 1, y) || checkPositions(grid, x, y + shipSize - 1))
+    );
+
+    if (x + shipSize >= 10) vertical = false;
+    else if (y + shipSize >= 10) vertical = true;
+    else vertical = getRandomInt(2) ? true : false;
+
+    placeShip(x, y, shipSize, vertical);
+  }
+
   function receiveAttack(x, y) {
     if (x < 0 || x >= 10 || y < 0 || y >= 10) return;
 
@@ -58,6 +80,7 @@ function Gameboard() {
     grid,
     ships,
     placeShip,
+    placeRandomShip,
     receiveAttack,
     allSunk
   }
