@@ -29,7 +29,7 @@ class Game {
     this.players.push(player);
     this.players.push(computer);
 
-    this.view.gamePage(this.players[1], this.players[0], this.handleBoardAttack);
+    this.view.gamePage(this.players[0], this.players[1], this.handleBoardAttack);
   }
 
   handleBoardAttack = (x, y) => {
