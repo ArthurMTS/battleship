@@ -5,6 +5,8 @@ class View {
   constructor() {
     this.main = document.createElement('main');
     this.main.id = 'main';
+    this.playerGrid;
+    this.computerGrid;
 
     document.querySelector('#root').append(
       header(), 
@@ -55,6 +57,9 @@ class View {
     gridComputer.classList.add('grid');
     gridComputer.classList.add('computer');
 
+    this.playerGrid = gridPlayer;
+    this.computerGrid = gridComputer;
+
     this.main.append(gridComputer, gridPlayer);
     
     this.loadBoard('player', player.gameboard, handler);
@@ -62,7 +67,7 @@ class View {
   }
 
   loadBoard(player, gameboard, handler) {
-    const grid = document.querySelector(`div .${player}`);
+    const grid = player === 'player' ? this.playerGrid : this.computerGrid;
     grid.innerHTML = '';
 
     let i, j;
