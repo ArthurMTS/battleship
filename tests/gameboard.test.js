@@ -67,6 +67,16 @@ it('Placing two Ships on the same positions', () => {
   expect(gb.grid[0][2].ship).toBe(null);
 });
 
+it('Removing Ships from gameboard', () => {
+  const gb = Gameboard();
+
+  gb.placeShip(0, 0, 4);
+  gb.placeShip(4, 5, 4);
+  gb.removeShips();
+
+  expect(gb.ships.length).toBe(0);
+});
+
 it('Attacking the grid', () => {
   const gb = Gameboard();
 

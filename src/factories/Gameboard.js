@@ -72,6 +72,19 @@ function Gameboard() {
     return true;
   }
 
+  function removeShips() {
+    if (ships.length === 0) return;
+    let i, j;
+
+    for (i = 0; i < 10; i++)
+      for (j = 0; j < 10; j++) {
+        if (grid[i][j].ship !== null) grid[i][j].ship = null;
+      }
+
+    for (i = 0; i <= ships.length; i++)
+      ships.pop();
+  }
+
   function allSunk() {
     return ships.every(ship => ship.isSunk());
   }
@@ -82,6 +95,7 @@ function Gameboard() {
     placeShip,
     placeRandomShip,
     receiveAttack,
+    removeShips,
     allSunk
   }
 }
