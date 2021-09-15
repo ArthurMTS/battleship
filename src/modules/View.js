@@ -46,6 +46,53 @@ class View {
     this.main.append(newGame);
   }
 
+  settingPlayerBoard(computer, handler) {
+    this.main.innerHTML = '';
+
+    const grid = document.createElement('div');
+    grid.classList.add('grid');
+    grid.classList.add('computer');
+
+    const buttons = document.createElement('div');
+    buttons.classList.add('buttons');
+
+    const startGame = document.createElement('button');
+    startGame.textContent = 'Start Game';
+    startGame.classList.add('pink-button');
+    startGame.addEventListener('click', () => {
+      if (computer.gameboard.ships.length === 5)
+        handler();
+    });
+
+    const clean = document.createElement('button');
+    clean.textContent = 'Clean';
+    clean.classList.add('pink-button');
+    clean.addEventListener('click', () => {
+      computer.gameboard.removeShips();
+      this.loadBoard('computer', computer.gameboard);
+    });
+
+    const random = document.createElement('button');
+    random.textContent = 'Random';
+    random.classList.add('pink-button');
+    random.addEventListener('click', () => {
+      computer.gameboard.removeShips();
+
+      for (i = 5; i >= 1; i--) {
+        computer.gameboard.placeRandomShip(i);
+      }
+
+      this.loadBoard('computer', computer.gameboard);
+    });
+
+    buttons.append(random, clean, startGame);
+
+    this.computerGrid = grid;
+
+    this.main.append(grid, buttons);
+    this.loadBoard('computer', computer.gameboard);
+  }
+
   gamePage(player, computer, handler) {
     this.main.innerHTML = '';
 
@@ -60,7 +107,7 @@ class View {
     this.playerGrid = gridPlayer;
     this.computerGrid = gridComputer;
 
-    this.main.append(gridComputer, gridPlayer);
+    this.main.append(this.computerGrid, this.playerGrid);
     
     this.loadBoard('player', player.gameboard, handler);
     this.loadBoard('computer', computer.gameboard, handler);

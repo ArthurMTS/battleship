@@ -184,6 +184,12 @@ a {
   transform: scale(1.05);
 }
 
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 @media(max-width: 818px) {
   #main-header {
     flex-direction: column;

@@ -20,13 +20,15 @@ class Game {
 
     // has player gameboard
     const computer = Player('Computer', true);
-    for (i = 5; i >= 1; i--) {
-      computer.gameboard.placeRandomShip(i);
-    }
 
     this.players.push(player);
     this.players.push(computer);
 
+    //this.view.gamePage(this.players[0], this.players[1], this.handleBoardAttack);
+    this.view.settingPlayerBoard(this.players[1], this.startGame);
+  }
+
+  startGame = () => {
     this.view.gamePage(this.players[0], this.players[1], this.handleBoardAttack);
   }
 

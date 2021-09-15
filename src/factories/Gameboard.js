@@ -5,7 +5,7 @@ const checkPositions = require('../utils/checkPositions');
 
 function Gameboard() {
   const grid = createGrid(10);
-  const ships = [];
+  let ships = [];
 
   function placeShip(x, y, shipSize, vertical = false) {
     if (x < 0 || x >= 10 || y < 0 || y >= 10) return;
@@ -13,6 +13,7 @@ function Gameboard() {
     if (!vertical && y + shipSize >= 10) return;
     if (vertical && x + shipSize >= 10) return;
     if (grid[x][y].ship != null) return;
+    if (ships.length >= 5) return;
 
     const ship = Ship(shipSize);
     ships.push(ship);
@@ -36,6 +37,8 @@ function Gameboard() {
   }
 
   function placeRandomShip(shipSize) {
+    if (ships.length >= 5) return;
+
     let x, y, vertical;
 
     do {
@@ -81,8 +84,7 @@ function Gameboard() {
         if (grid[i][j].ship !== null) grid[i][j].ship = null;
       }
 
-    for (i = 0; i <= ships.length; i++)
-      ships.pop();
+    ships.splice(0, ships.length);
   }
 
   function allSunk() {
