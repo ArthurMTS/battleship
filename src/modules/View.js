@@ -48,10 +48,42 @@ class View {
 
   settingPlayerBoard(computer, handler) {
     this.main.innerHTML = '';
+    let shipSize = 5;
+    let vertical = false;
+
+    const text = document.createElement('p');
+    text.classList.add('bottom-text');
+    text.textContent = `Place ship with size ${shipSize}`;
 
     const grid = document.createElement('div');
     grid.classList.add('grid');
     grid.classList.add('computer');
+    grid.addEventListener('mouseover', e => {
+      if (shipSize > 5 || shipSize < 0) return;
+
+      const cell = e.path[0];
+      cell.style.background = '#AF2A40';
+    });
+
+    grid.addEventListener('mouseout', e => {
+      const cell = e.path[0];
+      cell.style.background = '#fff';
+    });
+
+    grid.addEventListener('click', e => {
+      if (shipSize > 5 || shipSize < 0) return;
+
+      const cell = e.path[0];
+      const x = +cell.getAttribute('data-x');
+      const y = +cell.getAttribute('data-y');
+
+      if (computer.gameboard.placeShip(x, y, shipSize, vertical)) {
+        shipSize--;
+        this.loadBoard('computer', computer.gameboard);
+        if (shipSize === 0) text.textContent = 'Ready to go';
+        else text.textContent = `Place ship with size ${shipSize}`;
+      }
+    });
 
     const buttons = document.createElement('div');
     buttons.classList.add('buttons');
@@ -68,6 +100,8 @@ class View {
     clean.textContent = 'Clean';
     clean.classList.add('pink-button');
     clean.addEventListener('click', () => {
+      shipSize = 5;
+      text.textContent = `Place ship with size ${shipSize}`;
       computer.gameboard.removeShips();
       this.loadBoard('computer', computer.gameboard);
     });
@@ -83,13 +117,20 @@ class View {
       }
 
       this.loadBoard('computer', computer.gameboard);
+      shipSize = 0;
+      text.textContent = `Ready to go`;
     });
 
-    buttons.append(random, clean, startGame);
+    const rotate = document.createElement('button');
+    rotate.textContent = 'Rotate';
+    rotate.classList.add('pink-button');
+    rotate.addEventListener('click', () => vertical = !vertical);
+
+    buttons.append(random, rotate, clean, startGame);
 
     this.computerGrid = grid;
 
-    this.main.append(grid, buttons);
+    this.main.append(grid, buttons, text);
     this.loadBoard('computer', computer.gameboard);
   }
 
@@ -123,6 +164,8 @@ class View {
       for(j = 0; j < 10; j++) {
         const cell = document.createElement('button');
         cell.title = 'cell';
+        cell.setAttribute('data-x', i);
+        cell.setAttribute('data-y', j);
         cell.classList.add('cell');
 
         const { hitted, ship } = gameboard.grid[i][j];

@@ -190,6 +190,13 @@ a {
   gap: 10px;
 }
 
+.bottom-text {
+  position: absolute;
+  bottom: 75px;
+  color: #fff;
+  font-size: 20px;
+}
+
 @media(max-width: 818px) {
   #main-header {
     flex-direction: column;
@@ -219,5 +226,9 @@ a {
 
   #main-footer {
     position: inherit;
+  }
+
+  .pink-button:last-child {
+    margin-bottom: 25px;
   }
 }

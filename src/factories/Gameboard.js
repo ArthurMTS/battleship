@@ -34,6 +34,8 @@ function Gameboard() {
           position: index
         }
       );
+
+    return true;
   }
 
   function placeRandomShip(shipSize) {
