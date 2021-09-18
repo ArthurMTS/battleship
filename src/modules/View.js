@@ -26,7 +26,6 @@ class View {
     form.id = 'newgame-form';
     form.addEventListener('submit', e => {
       e.preventDefault();
-
       handler(input.value);
     });
 
@@ -59,7 +58,7 @@ class View {
     grid.classList.add('grid');
     grid.classList.add('computer');
     grid.addEventListener('mouseover', e => {
-      if (shipSize > 5 || shipSize < 0) return;
+      if (shipSize > 5 || shipSize < 1) return;
 
       const cell = e.path[0];
       cell.style.background = '#AF2A40';
@@ -71,15 +70,16 @@ class View {
     });
 
     grid.addEventListener('click', e => {
-      if (shipSize > 5 || shipSize < 0) return;
+      if (shipSize > 5 || shipSize < 1) return;
 
       const cell = e.path[0];
-      const x = +cell.getAttribute('data-x');
-      const y = +cell.getAttribute('data-y');
+      const x = Number(cell.getAttribute('data-x'));
+      const y = Number(cell.getAttribute('data-y'));
 
       if (computer.gameboard.placeShip(x, y, shipSize, vertical)) {
         shipSize--;
         this.loadBoard('computer', computer.gameboard);
+        
         if (shipSize === 0) text.textContent = 'Ready to go';
         else text.textContent = `Place ship with size ${shipSize}`;
       }
@@ -88,33 +88,14 @@ class View {
     const buttons = document.createElement('div');
     buttons.classList.add('buttons');
 
-    const startGame = document.createElement('button');
-    startGame.textContent = 'Start Game';
-    startGame.classList.add('pink-button');
-    startGame.addEventListener('click', () => {
-      if (computer.gameboard.ships.length === 5)
-        handler();
-    });
-
-    const clean = document.createElement('button');
-    clean.textContent = 'Clean';
-    clean.classList.add('pink-button');
-    clean.addEventListener('click', () => {
-      shipSize = 5;
-      text.textContent = `Place ship with size ${shipSize}`;
-      computer.gameboard.removeShips();
-      this.loadBoard('computer', computer.gameboard);
-    });
-
     const random = document.createElement('button');
     random.textContent = 'Random';
     random.classList.add('pink-button');
     random.addEventListener('click', () => {
       computer.gameboard.removeShips();
 
-      for (i = 5; i >= 1; i--) {
+      for (i = 5; i >= 1; i--)
         computer.gameboard.placeRandomShip(i);
-      }
 
       this.loadBoard('computer', computer.gameboard);
       shipSize = 0;
@@ -126,10 +107,27 @@ class View {
     rotate.classList.add('pink-button');
     rotate.addEventListener('click', () => vertical = !vertical);
 
-    buttons.append(random, rotate, clean, startGame);
+    const clean = document.createElement('button');
+    clean.textContent = 'Clean';
+    clean.classList.add('pink-button');
+    clean.addEventListener('click', () => {
+      shipSize = 5;
+      text.textContent = `Place ship with size ${shipSize}`;
+      computer.gameboard.removeShips();
+      this.loadBoard('computer', computer.gameboard);
+    });
+
+    const startGame = document.createElement('button');
+    startGame.textContent = 'Start Game';
+    startGame.classList.add('pink-button');
+    startGame.addEventListener('click', () => {
+      if (computer.gameboard.ships.length === 5)
+        handler();
+    });
 
     this.computerGrid = grid;
 
+    buttons.append(random, rotate, clean, startGame);
     this.main.append(grid, buttons, text);
     this.loadBoard('computer', computer.gameboard);
   }

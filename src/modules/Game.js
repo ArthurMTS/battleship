@@ -12,19 +12,15 @@ class Game {
   newGame = (playerName) => {
     let i;
 
-    // has computer gameboard
     const player = Player(playerName);
-    for (i = 5; i >= 1; i--) {
+    for (i = 5; i >= 1; i--)
       player.gameboard.placeRandomShip(i);
-    }
 
-    // has player gameboard
     const computer = Player('Computer', true);
 
     this.players.push(player);
     this.players.push(computer);
 
-    //this.view.gamePage(this.players[0], this.players[1], this.handleBoardAttack);
     this.view.settingPlayerBoard(this.players[1], this.startGame);
   }
 
@@ -49,7 +45,6 @@ class Game {
     this.view.loadBoard(
       'computer',
       this.players[1].gameboard,
-      this.handleBoardAttack
     );
     this.checkWinner();
   }

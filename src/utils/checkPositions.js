@@ -10,12 +10,10 @@ function checkPosition(grid, x, y) {
   if (x < 0 || y >= 10 || y < 0 || y >= 10) return false;
 
   try {
-    if (grid[x][y].ship != null) return true;
+    return grid[x][y].ship != null;
   } catch(e) {
     return true;
   }
-
-  return false;
 }
 
 module.exports = checkPositions;

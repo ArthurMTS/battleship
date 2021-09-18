@@ -8,30 +8,29 @@ function Gameboard() {
   let ships = [];
 
   function placeShip(x, y, shipSize, vertical = false) {
-    if (x < 0 || x >= 10 || y < 0 || y >= 10) return;
-    if (x + shipSize >= 10 && y + shipSize >= 10) return;
-    if (!vertical && y + shipSize >= 10) return;
-    if (vertical && x + shipSize >= 10) return;
-    if (grid[x][y].ship != null) return;
-    if (ships.length >= 5) return;
+    if (ships.length >= 5) return false;
+    if (x < 0 || x >= 10 || y < 0 || y >= 10) return false;
+    if (!vertical && y + shipSize >= 10) return false;
+    if (vertical && x + shipSize >= 10) return false;
+    if (grid[x][y].ship != null) return false;
 
     const ship = Ship(shipSize);
     ships.push(ship);
 
-    const shipId = ships.length - 1;
+    const id = ships.length - 1;
 
-    if (!vertical)
-      ship.hits.forEach((_, index) =>
-        grid[x][y + index].ship = {
-          id: shipId,
-          position: index
+    if (vertical)
+      ship.hits.forEach((_, position) =>
+        grid[x + position][y].ship = {
+          id,
+          position
         }
       );
     else 
-      ship.hits.forEach((_, index) =>
-        grid[x + index][y].ship = {
-          id: shipId,
-          position: index
+      ship.hits.forEach((_, position) =>
+        grid[x][y + position].ship = {
+          id,
+          position
         }
       );
 
@@ -40,7 +39,6 @@ function Gameboard() {
 
   function placeRandomShip(shipSize) {
     if (ships.length >= 5) return;
-
     let x, y, vertical;
 
     do {
@@ -60,7 +58,7 @@ function Gameboard() {
   }
 
   function receiveAttack(x, y) {
-    if (x < 0 || x >= 10 || y < 0 || y >= 10) return;
+    if (x < 0 || x >= 10 || y < 0 || y >= 10) return false;
 
     const { hitted, ship } = grid[x][y];
 
