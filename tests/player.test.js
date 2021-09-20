@@ -1,77 +1,47 @@
-const Player = require('../src/factories/Player');
-const GameBoard = require('../src/factories/GameBoard');
+const Player = require('./../src/factories/Player');
 
-it('Player name', () => {
+it('Creating a Player', () => {
   expect(Player('Arthur').name).toBe('Arthur');
 });
 
-it('Player\'s turn (1)', () => {
-  expect(Player('Arthur').myTurn).toBeFalsy();
+it('Checking the Player Gameboard', () => {
+  const player = Player('Arthur');
+
+  let i, j, aux;
+  const dummyGrid = [];
+
+  for(i = 0; i < 10; i++) {
+    aux = [];
+    for (j = 0; j < 10; j++) {
+      aux.push({
+        hitted: false,
+        ship: null
+      });
+    }
+    dummyGrid.push(aux);
+  }
+
+  expect(player.gameboard.grid).toEqual(dummyGrid);
 });
 
-it('Player\'s turn (2)', () => {
-  const newPlayer = Player('Arthur');
-  newPlayer.myTurn = true;
+it('Creating a bot player', () => {
+  const player = Player('Silva', true);
 
-  expect(newPlayer.myTurn).toBeTruthy();
+  expect(player.isBot).toBeTruthy();
 });
 
-it('Am i a bot (1)', () => {
-  const newPlayer = Player('Bot', {}, true);
+it('Player attack', () => {
+  const player = Player('Matheus');
 
-  expect(newPlayer.isBot).toBeTruthy();
-});
+  player.attack(0, 0);
 
-it('Am i a bot (2)', () => {
-  const newPlayer = Player('Matheus', {}, false);
-
-  expect(newPlayer.isBot).toBeFalsy();
-});
-
-it('Am i a bot (3)', () => {
-  const newPlayer = Player('Silva');
-
-  expect(newPlayer.isBot).toBeFalsy();
-});
-
-it('Player have a Board', () => {
-  const gb = GameBoard();
-
-  const { gameboard } = Player('Arthur', gb);
-
-  const toBe = (new Array(10)).fill((new Array(10)).fill({
-    wasShooted: false,
-    ship: null
-  }))
-
-  expect(gameboard.board).toEqual(toBe);
-});
-
-it('Player attact', () => {
-  const gb = GameBoard();
-  const myPlayer = Player('Arthur', gb);
-
-  const attackInfo = myPlayer.attack(0, 0);
-
-  expect(attackInfo).toEqual({
-    wasShooted: true,
-    ship: null
-  });
-
-  expect(myPlayer.gameboard.board[0][0]).toEqual({
-    wasShooted: true,
-    ship: null
-  });
+  expect(player.gameboard.grid[0][0]).toEqual({ hitted: true, ship: null });
 });
 
 it('Bot attack', () => {
-  const gb = GameBoard();
-  const myPlayer = Player('Botson', gb, true);
+  const player = Player('Computer', true);
 
-  const attackInfo = myPlayer.attack();
+  const wasHitted = player.attack();
 
-  expect(attackInfo).toEqual({
-    wasShooted: true,
-    ship: null
-  });
+  expect(wasHitted).toBeTruthy();
 });

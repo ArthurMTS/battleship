@@ -1,107 +1,234 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 * {
   margin: 0;
   padding: 0;
+  outline: 0;
   box-sizing: border-box;
 }
 
-body {
-  background-color: #E7E7E7;
+html, body, #root {
+  height: 100%;
+}
+
+body, button, input {
   font-family: 'Roboto', sans-serif;
+}
+
+li {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
 }
 
 #main-header {
-  background-color: #151525;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 20px 200px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+#main-header #title {
+  font-size: 36px;
+  color: #e0dedf;
+  text-shadow: 5px 5px #00000040;
+  transition: all .2s;
+}
+
+#title:hover {
+  cursor: pointer;
+  color: #AF2A40 !important;
+}
+
+#main-header #nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  width: 100%;
-  top: 0;
 }
 
-#main-header h1 {
-  color: #F7F7F7;
-  font-size: 36px;
-  padding: 10px 0;
+#nav ul {
+  display: flex;
+}
+
+#nav li {
+  padding: 0 10px;
+  font-size: 18px;
+}
+
+#nav a {
+  color: #aaa5ae;
+  transition: all .2s;
+  border-bottom: 2px solid #212949;
+}
+
+#nav a:hover {
+  color: #e0dedf;
+  border-color: #AF2A40;
 }
 
 #main {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-self: center;
-}
-
-#start-page {
-  margin-top: 100px;
-  background-color: #050515;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 60vh;
-  width: 50vw;
-  border-radius: 5px;
-  box-shadow: 5px 5px 10px #222;
-  transition: transform .2s;
+  background-color: #212949;
 }
 
-#start-page:hover {
-  transform: scale(1.01);
-}
-
-#start-page h2 {
+#main h2 {
+  color: #eeeeee;
   font-size: 36px;
-  color: #F7F7F7;
-  margin-bottom: 50px;
 }
 
-#start-page form {
+#main #newgame-form {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
-#start-page input {
-  padding: 10px;
-  font-size: 20px;
-  font-family: 'Roboto', sans-serif;
-}
-
-#start-page button {
-  margin-top: 10px;
-  font-size: 20px;
+#newgame-form input {
+  padding: 10px 15px;
   border: none;
   border-radius: 5px;
-  padding: 10px;
-  cursor: pointer;
-  font-family: 'Roboto', sans-serif;
-  background-color: #353545;
-  color: #E7E7E7;
-  opacity: .8;
-  transition: opacity .2s;
+  font-size: 20px;
+  margin: 50px 0 20px 0;
 }
 
-#start-page button:hover {
-  opacity: 1;
+#winner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#winner p {
+  font-size: 26px;
+  color: #fff;
+}
+
+#winner button {
+  margin-top: 10px;
 }
 
 #main-footer {
-  background-color: #151525;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: #AF2A40;
   position: absolute;
-  width: 100%;
   bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #main-footer p {
-  color: #F7F7F7;
   font-size: 18px;
-  padding: 10px 0;
+  color: #eeeeee;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  background-color: #eeeeee;
+  margin: 0 20px;
+}
+
+.grid .cell {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #212949;
+  border-radius: 0;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.computer .cell {
+  cursor: default !important;
+  transform: scale(1) !important;
+}
+
+.hitted {
+  cursor: not-allowed !important;
+  background-color: #AF2A40;
+}
+
+.missed {
+  cursor: not-allowed !important;
+  background-color: #5265b4;
+}
+
+.scale:hover {
+  transform: scale(1.1);
+}
+
+.pink-button {
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  color: #eeeeee;
+  background-color: #AF2A40;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.pink-button:hover {
+  transform: scale(1.05);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bottom-text {
+  position: absolute;
+  bottom: 75px;
+  color: #fff;
+  font-size: 20px;
+}
+
+@media(max-width: 818px) {
+  #main-header {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+  }
+
+  #nav {
+    margin-top: 5px;
+  }
+}
+
+@media(max-width: 1080px) {
+  #main {
+    flex-direction: column;
+    padding-top: 120px;
+  }
+
+  .grid {
+    margin-bottom: 50px;
+  }
+
+  #winner {
+    margin-bottom: 50px;
+  }
+
+  #main-footer {
+    position: inherit;
+  }
+
+  .pink-button:last-child {
+    margin-bottom: 25px;
+  }
 }

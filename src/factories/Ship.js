@@ -1,25 +1,33 @@
 function Ship(shipSize) {
-  if (shipSize < 1 || shipSize > 5) return null;
-
   const length = shipSize;
-  const positions = (new Array(length)).fill(false);
+  const hits = initializeHits(shipSize);
 
-  function hit(index) {
-    if (index < 0 || index >= length) return;
+  function hit(position) {
+    if (position < 0 || position >= length) return;
 
-    positions[index] = true;
+    hits[position] = true;
   }
-  
+
   function isSunk() {
-    return positions.every(position => position);
+    return hits.every(position => position === true);
   }
 
   return {
-    positions,
     length,
-    isSunk,
-    hit
+    hits,
+    hit,
+    isSunk
   }
+}
+
+function initializeHits(shipSize) {
+  let i;
+  const hits = [];
+
+  for (i = 0; i < shipSize; i++)
+    hits.push(false);
+
+  return hits;
 }
 
 module.exports = Ship;

@@ -1,82 +1,134 @@
-const GameBoard = require('../src/factories/GameBoard');
-const Ship = require('../src/factories/Ship');
+const Gameboard = require('./../src/factories/Gameboard');
 
-it('Board created', () => {
-  const expecting = GameBoard().board;
-  const toBe = (new Array(10)).fill((new Array(10)).fill({
-    wasShooted: false,
-    ship: null
-  }))
+it('Creating Gameboard', () => {
+  let i, j, aux;
+  const dummyGrid = [];
 
-  expect(expecting).toEqual(toBe);
+  for(i = 0; i < 10; i++) {
+    aux = [];
+    for (j = 0; j < 10; j++) {
+      aux.push({
+        hitted: false,
+        ship: null
+      });
+    }
+    dummyGrid.push(aux);
+  }
+
+  const gb = Gameboard();
+
+  expect(gb.grid).toEqual(dummyGrid);
 });
 
-it('No ships', () => {
-  const gb = GameBoard();
+it('Placing a size one Ship', () => {
+  const gb = Gameboard();
 
-  expect(gb.ships).toEqual([]);
-});
+  gb.placeShip(0, 0, 1);
 
-it('Adding a ship', () => {
-  const gb = GameBoard();
-  const ship = Ship(1)
-
-  gb.placeShip(ship, 0, 0);
-
-  expect(gb.ships.length).toBe(1);
-  expect(gb.ships[0].length).toBe(1);
-  expect(gb.board[0][0].ship).toEqual({
-    index: 0,
+  expect(gb.grid[0][0].ship).toEqual({
+    id: 0,
     position: 0
   });
 });
 
-it('No ships sunk', () => {
-  const gb = GameBoard();
-  const ship = Ship(1);
+it('Placing two size four Ships', () => {
+  const gb = Gameboard();
 
-  gb.placeShip(ship, 0, 0);
+  gb.placeShip(0, 0, 4);
+  gb.placeShip(4, 5, 4);
 
-  expect(gb.allSunk()).toBeFalsy();
+  expect(gb.grid[0][0].ship).toEqual({ id: 0, position: 0 });
+  expect(gb.grid[0][1].ship).toEqual({ id: 0, position: 1 });
+  expect(gb.grid[0][2].ship).toEqual({ id: 0, position: 2 });
+  expect(gb.grid[0][3].ship).toEqual({ id: 0, position: 3 });
+  expect(gb.grid[4][5].ship).toEqual({ id: 1, position: 0 });
+  expect(gb.grid[4][6].ship).toEqual({ id: 1, position: 1 });
+  expect(gb.grid[4][7].ship).toEqual({ id: 1, position: 2 });
+  expect(gb.grid[4][8].ship).toEqual({ id: 1, position: 3 });
 });
 
-it('Are all ships sunk?', () => {
-  const gb = GameBoard();
+it('Placing a size four Ship vertically', () => {
+  const gb = Gameboard();
 
-  const ship1 = Ship(1)
-  const ship2 = Ship(2)
+  gb.placeShip(0, 0, 4, true);
 
-  gb.placeShip(ship1, 0, 0);
-  gb.placeShip(ship2, 1, 2);
-
-  gb.ships[0].hit(0);
-  gb.ships[1].hit(0);
-  gb.ships[1].hit(1);
-
-  expect(gb.allSunk()).toBeTruthy();
+  expect(gb.grid[0][0].ship).toEqual({ id: 0, position: 0 });
+  expect(gb.grid[1][0].ship).toEqual({ id: 0, position: 1 });
+  expect(gb.grid[2][0].ship).toEqual({ id: 0, position: 2 });
+  expect(gb.grid[3][0].ship).toEqual({ id: 0, position: 3 });
 });
 
-it('Miss attack', () => {
-  const gb = GameBoard();
+it('Placing two Ships on the same positions', () => {
+  const gb = Gameboard();
 
-  expect(gb.attack(0, 0)).toEqual({
-    wasShooted: true,
+  gb.placeShip(0, 0, 2);
+  gb.placeShip(0, 0, 3);
+
+  expect(gb.grid[0][2].ship).toBe(null);
+});
+
+it('Removing Ships from gameboard', () => {
+  const gb = Gameboard();
+
+  gb.placeShip(0, 0, 4);
+  gb.placeShip(4, 5, 4);
+  gb.removeShips();
+
+  expect(gb.ships.length).toBe(0);
+});
+
+it('Attacking the grid', () => {
+  const gb = Gameboard();
+
+  gb.receiveAttack(0, 0);
+
+  expect(gb.grid[0][0]).toEqual({
+    hitted: true,
     ship: null
   });
 });
 
-it('Hit attack', () => {
-  const gb = GameBoard();
-  const ship = Ship(1)
+it('Attacking a ship on the grid', () => {
+  const gb = Gameboard();
 
-  gb.placeShip(ship, 0, 0);
+  gb.placeShip(0, 0, 2);
 
-  expect(gb.attack(0, 0)).toEqual({
-    wasShooted: true,
-    ship: { index: 0, position: 0 }
+  gb.receiveAttack(0, 0);
+
+  expect(gb.grid[0][0]).toEqual({
+    hitted: true,
+    ship: {
+      id: 0,
+      position: 0
+    }
   });
 
-  expect(gb.ships[0].isSunk()).toBeTruthy();
+  expect(gb.grid[0][1]).toEqual({
+    hitted: false,
+    ship: {
+      id: 0,
+      position: 1
+    }
+  });
+
+  expect(gb.ships[0].hits[0]).toBeTruthy();
+});
+
+it('All ships sunk', () => {
+  const gb = Gameboard();
+
+  gb.placeShip(0, 0, 1);
+  gb.receiveAttack(0, 0);
 
   expect(gb.allSunk()).toBeTruthy();
+});
+
+it('Not all ships sunk', () => {
+  const gb = Gameboard();
+
+  gb.placeShip(0, 0, 1);
+  gb.placeShip(1, 2, 3);
+  gb.receiveAttack(0, 0);
+
+  expect(gb.allSunk()).toBeFalsy();
 });

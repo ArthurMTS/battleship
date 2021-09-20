@@ -1,45 +1,47 @@
-const Ship = require('../src/factories/Ship');
+const Ship = require('./../src/factories/Ship');
 
-it('Ship created', () => {
-  expect(Ship(3).length).toBe(3);
+it('Create Ship with length 1', () => {
+  const ship = Ship(1);
+
+  expect(ship.length).toBe(1);
+  expect(ship.hits.length).toBe(1);
 });
 
+it('Create Ship with length 2', () => {
+  const ship = Ship(2);
 
-it('Ship not created', () => {
-  expect(Ship(0)).toBeNull();
-  expect(Ship(-1)).toBeNull();
-  expect(Ship(6)).toBeNull();
+  expect(ship.length).toBe(2);
+  expect(ship.hits.length).toBe(2);
 });
 
-it('Ship has no damage', () => {
-  expect(Ship(2).positions).toEqual([false, false]);
+it('Hit Ship', () => {
+  const ship = Ship(5);
+
+  ship.hit(0);
+
+  expect(ship.hits[0]).toBeTruthy();
 });
 
-it('Ship was hitted', () => {
-  const myShip = Ship(3);
-  myShip.hit(1);
+it('Miss Ship', () => {
+  const ship = Ship(5);
 
-  expect(myShip.positions).toEqual([false, true, false]);
-});
+  ship.hit(5);
 
-it('Ship was not hitted', () => {
-  const myShip = Ship(3);
-  myShip.hit(-1);
-  myShip.hit(3);
-
-  expect(myShip.positions).toEqual([false, false, false]);
+  expect(ship.hits.every(position => position === false)).toBeTruthy();
 });
 
 it('Ship is sunk', () => {
-  const myShip = Ship(1);
-  myShip.hit(0);
+  const ship = Ship(1);
 
-  expect(myShip.isSunk()).toBeTruthy();
+  ship.hit(0);
+
+  expect(ship.isSunk()).toBeTruthy();
 });
 
 it('Ship is not sunk', () => {
-  const myShip = Ship(2);
-  myShip.hit(0);
+  const ship = Ship(2);
 
-  expect(myShip.isSunk()).toBeFalsy();
+  ship.hit(0);
+
+  expect(ship.isSunk()).toBeFalsy();
 });

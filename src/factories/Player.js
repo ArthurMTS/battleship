@@ -1,30 +1,29 @@
-function Player(playerName, gb, bot = false) {
+const Gameboard = require('../factories/Gameboard');
+
+const getRandomInt = require('../utils/getRandomInt');
+
+function Player(playerName, bot = false) {
   const name = playerName;
+  const gameboard = Gameboard();
   const isBot = bot;
-  const gameboard = gb;
-  
-  let myTurn = false;
 
-  function attack(x = undefined, y = undefined) {
+  function attack(x, y) {
     if (isBot) {
-      x = getRandomInt(10);
-      y = getRandomInt(10);
-    } 
+      do {
+        x = getRandomInt(10);
+        y = getRandomInt(10);
+      } while (gameboard.grid[x][y].hitted);
+    }
 
-    return gameboard.attack(x, y);
+    return gameboard.receiveAttack(x, y);
   }
 
   return {
     name,
-    myTurn,
-    isBot,
     gameboard,
+    isBot,
     attack
   }
-}
-
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
 }
 
 module.exports = Player;
